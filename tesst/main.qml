@@ -81,16 +81,16 @@ Window {
             mydataForCalculate.checkFist()
         }
     }
-//    Repeater {
-//        id:r3
-//        anchors.fill: parent
-//        model: myBaseDataModel2
-//        delegate: MyLine{
-//            line: pointList
-//            anchors.fill: parent
-//            color: "yellow"
-//        }
-//    }
+    Repeater {
+        id:r3
+        anchors.fill: parent
+        model: myBaseDataModel2
+        delegate: MyLine{
+            line: pointList
+            anchors.fill: parent
+            color: "yellow"
+        }
+    }
 //    Repeater {
 //        id:r4
 //        anchors.fill: parent
