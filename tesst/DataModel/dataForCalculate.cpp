@@ -5,10 +5,10 @@
 dataForCalculate::dataForCalculate()
 {
     //qDebug()<< "ok";
-//    pTemp.push_back(A);
-//    pTemp.push_back(B);
-//    pTemp.push_back(C);
-//    pTemp.push_back(D);
+    //    pTemp.push_back(A);
+    //    pTemp.push_back(B);
+    //    pTemp.push_back(C);
+    //    pTemp.push_back(D);
 }
 
 void dataForCalculate::getPointOder()
@@ -44,53 +44,50 @@ void dataForCalculate::getCases()
             {
                 for(int k = 0; k < P[e].length(); k++)
                 {
-                    if (e == i)
+                    bool test = true;
+                    for(int m = 0; m < P.length(); m++)
                     {
-                        if(j == k) continue;
-                        if((j != (k+1) && j != k-1)&&(j != (k-1) && j != k-P[e].length()+1)&&(j != (k+1) && j != P[e].length()+k-1))//điều kiện ko nhận hai điểm trước và sau
+                        for(int n = 0; n < P[m].length(); n++)//kiểm tra đoạn thẳng trên hình có giao với các cạnh của nó ko
                         {
-                            for(int m = 0; m < P.length(); m++)
+                            if (i == e)
                             {
-                                if(m == i)
+                                if (j == k) continue;
+                                if((j != (k+1) && j != k-1)&&(j != (k-1) && j != k-P[e].length()+1)&&(j != (k+1) && j != P[e].length()+k-1))//điều kiện ko nhận hai điểm trước và sau
                                 {
-                                    bool test = true;
-                                    for(int n = 0; n < P[m].length(); n++)//kiểm tra đoạn thẳng trên hình có giao với các cạnh của nó ko
+                                    //qDebug()<<"ok1";
+                                    if(checkIntersect(P[i][j], P[e][k], P[m][n], P[m][ ((n+1) == P[m].length()) ? 0:(n+1)]))
                                     {
-                                        //qDebug()<< "ok1";
-                                        //if((n == j && k == (n+1))||(n == k && j == (n+1))) continue; //điều kiện hai đoạn ko trùng nhau
-                                        if(checkIntersect(P[i][j], P[e][k], P[m][n], P[m][ ((n+1) == P[m].length()) ? 0:(n+1)]))
-                                        {
-                                            //qDebug()<< "ok2";
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                    if(test && (!checkIn(P[i][j], P[e][k], P[m])))
-                                    {
-                                        caseList1.push_back(tempList[e][k]);
+                                        test = false;
+                                        goto jump;
                                     }
                                 }
-//                                if(m!=i)
-//                                {
-
-//                                }
+                            }
+                            if (i != e)
+                            {
+                                //qDebug()<<"ok";
+                                if(checkIntersect(P[i][j], P[e][k], P[m][n], P[m][ ((n+1) == P[m].length()) ? 0:(n+1)]))
+                                {
+                                    test = false;
+                                    goto jump;
+                                }
                             }
                         }
                     }
-//                    if(e != i)
-//                    {
-//                        for(int m = 0; m < P.length(); m++)
-//                        {
-//                            for(int n = 0; n < P[m].length(); n++)
-//                            {
-//                                if(checkIntersect(P[i][j], P[e][k], P[m][n], P[m][ ((n+1) == P[m].length()) ? 0:(n+1)]))
-//                                {
-//                                    test = 0;
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                    }
+jump:
+                    if((i==e) && (j!=k) && ((j != (k+1) && j != k-1)&&(j != (k-1) && j != k-P[e].length()+1)&&(j != (k+1) && j != P[e].length()+k-1)))
+                    {
+                        if(!checkIn(P[i][j], P[e][k], P[i]))
+                        {
+                            //qDebug()<<"ok";
+                            caseList1.push_back(tempList[e][k]);
+
+                        }
+                    }
+                    if(i != e && test)
+                    {
+                        //qDebug()<<"ok";
+                        caseList1.push_back(tempList[e][k]);
+                    }
                 }
             }
             caseList1.push_back(tempList[i][((j+1) == P[i].length()) ? 0:(j+1)]);
@@ -142,7 +139,7 @@ bool dataForCalculate::checkIn(QPointF A, QPointF B, QVector<QPointF> C)
         float X = (E*C[i].x() - F*xA - C[i].y() + yA)/(E-F);
         if((X > xA) && (((C[i].x() < X)&&(X < C[(i+1) == (C.length()) ? 0:(i+1)].x())) || (((C[(i+1) == (C.length()) ? 0:(i+1)].x()) < X)&&(X < C[i].x()))))
         {
-           count ++;
+            count ++;
             //qDebug()<<count;
         }
 

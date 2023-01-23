@@ -14,6 +14,7 @@ public:
     Q_INVOKABLE void getPointOder();
     void getDis(QVector<QPointF> pointOder, QVector<QVector<int>> caseList);
     bool checkIntersect(QPointF A, QPointF B, QPointF C, QPointF D);
+    float distance(QPointF A, QPointF B);
 
     Q_INVOKABLE void getPoint(float x,float y);
     Q_INVOKABLE void getPoints();
